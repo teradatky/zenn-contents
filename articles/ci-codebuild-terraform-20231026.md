@@ -52,6 +52,10 @@ tfnotify が GitHub に通知をするために利用します。
 
 ![アクセストークン](/images/ci-codebuild-terraform-20231026/ghp_token.png)
 
+:::message
+ウィンドウを閉じるとトークンは二度と確認できません。きちんとメモしておきましょう。
+:::
+
 ### IAM
 
 Terraform 実行に必要な権限を付与した IAM ロールを作成します。
@@ -62,6 +66,13 @@ Terraform 実行に必要な権限を付与した IAM ロールを作成しま�
 ![IAMロール](/images/ci-codebuild-terraform-20231026/iam_role2.png)
 ![IAMロール](/images/ci-codebuild-terraform-20231026/iam_role3.png)
 
+### S3
+
+Terraform のバックエンド用 S3 バケットを作成します。
+デフォルト値から変える設定は特にありません。
+
+![S3バケット](/images/ci-codebuild-terraform-20231026/s3_tfstate.png)
+
 ## 構築
 
 サンプルコードはこちら。
@@ -71,8 +82,11 @@ https://github.com/teradatky/ci-codebuild-terraform-20231026
 ### GitHub
 
 リポジトリを参考に、CI 用のコードをプッシュします。
+Terraform コードは `main.tf` を除いてください。
+
 CodeBuild が利用する `buildspec_plan.yml` は以下です。
-`buildspec_apply.yml` もお忘れなく。
+各フェーズでツールのインストール、 `terraform init` 、 `terraform plan | tfnotify` をしています。
+apply を行う buildspec はほぼ同じ形式のため、リポジトリを確認してください。
 
 ```yml
 version: 0.2
@@ -80,7 +94,7 @@ version: 0.2
 env:
   variables:
     TFDIR: "terraform"
-    TFNCONF: "codebuild/tfnotify_plan.yml"
+    TFNCONF: "codebuild/tfnotify.yml"
     TITLE: "Terraform Plan"
     MSG: "Plan detail via tfnotify"
 
@@ -105,7 +119,7 @@ phases:
 ```
 
 :::message
-CI 頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
+CI が頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
 :::
 
 tfnotify 用の設定ファイルは以下です。
@@ -150,11 +164,35 @@ terraform:
 ### CodeBuild
 
 ビルドプロジェクトを 2 つ作成します。
-特に「プライマリソースのウェブフックイベント」が以下の通り変わることに注意します。
+「プライマリソースのウェブフックイベント」が変わることに注意します。
 
 - plan 用ビルドプロジェクト
   - `PULL_REQUEST_CREATED` `PULL_REQUEST_UPDATED` `PULL_REQUEST_REOPEND`
 - apply 用ビルドプロジェクト
   - `PULL_REQUEST_MERGED`
 
+以下に plan 用ビルドプロジェクトを作成するスクリーンショットを載せています。
+apply 用のリソースのスクリーンショットは省略しますが、同様に作成します。
+
+:::message
+デフォルト値から変更していない箇所は、スクリーンショットを撮っていません。
+名前やログ出力先などもビルドプロジェクトに合わせて適宜変更してください。
+:::
+
+:::message
+個人用の AWS アカウントでない場合、アクセストークンはプレーンテキストではなく Secrets Manager を利用してください。
+:::
+
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild1.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild2.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild3.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild4.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild5.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild6.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild7.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild8.png)
+
 ## CICD ワークフロー例
+
+実際に Terraform コードをプッシュし、プルリクエストを作成/マージしてみます。
+
