@@ -6,7 +6,7 @@ topics: ["Zenn", "Github"]
 published: true
 ---
 
-GitHub と連携し Markdown 形式で Zenn.dev に記事を執筆した感想です。
+GitHub と連携、Markdown 形式で Zenn.dev に記事を投稿した感想です。
 
 :::details きっかけ
 仕事で技術検証やノウハウ共有を要求されるものの、アウトプットが見る人が少ない、リアクションがないなどの不満がありました。
