@@ -3,7 +3,7 @@ title: "AWS CodeBuild と GitHub で実現する Terraform CICD 入門"
 emoji: "🛠️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["CICD", "AWS", "CodeBuild", "Terraform", "GitHub"]
-published: false
+published: true
 ---
 
 AWS CodeBuild と GitHub による Terraform の CICD 実装例を紹介します。
