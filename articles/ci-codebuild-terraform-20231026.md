@@ -6,7 +6,7 @@ topics: ["CICD", "AWS", "CodeBuild", "Terraform", "GitHub"]
 published: false
 ---
 
-AWS CodeBuild と GitHub による Terraform の CICD 実装例をご紹介します。
+AWS CodeBuild と GitHub による Terraform の CICD 実装例を紹介します。
 
 ## 想定読者
 
@@ -20,8 +20,8 @@ CodeBuild のビルドプロジェクトは 2 つ作成します。
 
 ![構成図](/images/ci-codebuild-terraform-20231026/architecture.png)
 
-:::message
-`terraform apply` が同時に実行される可能性がある場合（CI 以外にローカルから apply を許可する場合など）は tfstate の破損を防ぐために　DynamoDB による state lock を追加してください。
+:::message alert
+`terraform apply` が同時に実行される可能性がある場合は tfstate の破損を防ぐために　DynamoDB による state lock を追加してください。
 :::
 
 :::details GitHub Actionsについて
@@ -69,7 +69,7 @@ Terraform 実行に必要な権限を付与した IAM ロールを作成しま�
 ### S3
 
 Terraform のバックエンド用 S3 バケットを作成します。
-デフォルト値から変える設定は特にありません。
+デフォルト値から変える設定はありません。
 
 ![S3バケット](/images/ci-codebuild-terraform-20231026/s3_tfstate.png)
 
@@ -81,19 +81,19 @@ https://github.com/teradatky/ci-codebuild-terraform-20231026
 
 ### GitHub
 
-リポジトリを参考に、CI 用のコードをプッシュします。
+リポジトリを参考に、CICD 用のコードをプッシュします。
 Terraform コードは `main.tf` を除いてください。
 
 CodeBuild が利用する `buildspec_plan.yml` は以下です。
 各フェーズでツールのインストール、 `terraform init` 、 `terraform plan | tfnotify` をしています。
-apply を行う buildspec はほぼ同じ形式のため、リポジトリを確認してください。
+apply を行う `buildspec_apply.yml` については、リポジトリを確認してください。
 
-```yml
+```yml:buildspec_plan.yml
 version: 0.2
 
 env:
   variables:
-    TFDIR: "terraform"
+    TFDIR: "environments"
     TFNCONF: "codebuild/tfnotify.yml"
     TITLE: "Terraform Plan"
     MSG: "Plan detail via tfnotify"
@@ -119,13 +119,13 @@ phases:
 ```
 
 :::message
-CI が頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
+CICD が頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
 :::
 
 tfnotify 用の設定ファイルは以下です。
 こちらは plan と apply が 1 ファイルにまとめられます。
 
-```yml
+```yml:tfnotify.yml
 ---
 ci: codebuild
 notifier:
@@ -149,7 +149,7 @@ terraform:
       </pre></code></details>
   apply:
     template: |
-      {{ .Title }}
+      {{ .Title }} <sup>[CI link]( {{ .Link }} )</sup>
       {{ .Message }}
       {{if .Result}}
       <pre><code>{{ .Result }}
@@ -164,13 +164,6 @@ terraform:
 ### CodeBuild
 
 ビルドプロジェクトを 2 つ作成します。
-「プライマリソースのウェブフックイベント」が変わることに注意します。
-
-- plan 用ビルドプロジェクト
-  - `PULL_REQUEST_CREATED` `PULL_REQUEST_UPDATED` `PULL_REQUEST_REOPEND`
-- apply 用ビルドプロジェクト
-  - `PULL_REQUEST_MERGED`
-
 以下に plan 用ビルドプロジェクトを作成するスクリーンショットを載せています。
 apply 用のリソースのスクリーンショットは省略しますが、同様に作成します。
 
@@ -179,20 +172,96 @@ apply 用のリソースのスクリーンショットは省略しますが、�
 名前やログ出力先などもビルドプロジェクトに合わせて適宜変更してください。
 :::
 
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild1.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild2.png)
+
 :::message
+OAuth 連携が初回の場合、このような画面に遷移します。
+![OAuth](/images/ci-codebuild-terraform-20231026/oauth.png)
+:::
+
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild3.png)
+
+:::message
+「プライマリソースのウェブフックイベント」が変わることに注意します。
+
+- plan 用ビルドプロジェクト
+  - `PULL_REQUEST_CREATED` `PULL_REQUEST_UPDATED` `PULL_REQUEST_REOPEND`
+- apply 用ビルドプロジェクト
+  - `PULL_REQUEST_MERGED`
+:::
+
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild4.png)
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild5.png)
+
+:::message
+サービスロールの編集を許可する場合は、自動的に IAM ロールに必要なポリシーがアタッチされます。許可しない場合、事前に必要な権限を付与しておく必要があります。
+@[card](https://dev.classmethod.jp/articles/codebuild-service-role-checkbox/)
+:::
+
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild6.png)
+
+:::message alert
 個人用の AWS アカウントでない場合、アクセストークンはプレーンテキストではなく Secrets Manager を利用してください。
 :::
 
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild1.png)
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild2.png)
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild3.png)
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild4.png)
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild5.png)
-![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild6.png)
 ![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild7.png)
 ![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild8.png)
 
-## CICD ワークフロー例
+:::message
+ストリーム名を空にすることで、ビルドごとに別のストリームにログを記録します。
+:::
 
-実際に Terraform コードをプッシュし、プルリクエストを作成/マージしてみます。
+2 つのビルドプロジェクトが作成できました。
 
+![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild9.png)
+
+## CICD ワークフロー
+
+実際に Terraform コードを記載し CICD ワークフローを回します。
+今回は S3 バケットを作成します。 `main.tf` に以下を記載してプッシュします。
+
+```hcl:main.tf
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "ci-codebuild-terraform-20231026-my-bucket"
+}
+```
+
+プルリクエストを作成し、マージするまでの流れを記載します。
+実際のプルリクエストはこちらから確認できます。
+
+https://github.com/teradatky/ci-codebuild-terraform-20231026/pull/2
+
+プルリクエストを作成しました。
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr1.png)
+
+すると `tfnotify` により plan 結果が通知されます。
+レビュアーはこの結果を確認することで、マージ可否を簡単に判断できるようになります。
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr2.png)
+
+`terraform init` や `terraform plan` で失敗していないことが checks からも分かります。
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr3.png)
+
+レビュアーから Approve されたらマージしましょう。
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr4.png)
+
+マージ後 `terraform apply` の結果が通知されます。
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr5.png)
+
+:::message
+plan が通っても apply が失敗するケースはよくあるため、きちんと結果を確認しましょう。
+:::
+
+以上、CICD ワークフローの一例でした。
+
+## まとめ
+
+CodeBuild を使うことで、Terraform の CICD が実現できました。
+プルリクエストをベースとすることで、作業ミスや認識齟齬をグッと減らすことができます。
+また tfnotify は plan や apply 結果が プルリクエスト内で確認できるため、レビュー負荷が軽減されます。
+CICD を未経験の方はぜひ試してみて欲しいです。
