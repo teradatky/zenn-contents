@@ -24,6 +24,10 @@ Linter / Formatter に初めて触れたインフラエンジニアが自身の�
 
 ## インフラエンジニアの環境考察
 
+:::message alert
+設定方法だけ知りたい方は、本章を読み飛ばしてください。
+:::
+
 私は Next.js に入門し、初めて Linter / Formatter に触れました。
 `Ctrl + S` するだけで適切にコードがフォーマットされる経験は新鮮で強烈でした。
 「この気持ち良さをいろんな人に味わってほしい！」と思いました。
@@ -31,14 +35,14 @@ Linter / Formatter に初めて触れたインフラエンジニアが自身の�
 一方で周りのエンジニアが Linter / Formatter を使っているところをほとんど見かけません。
 「せっかく便利なものがあるのに…」と思いこの理由について考えてみました。
 
-:::message
-設定方法だけ知りたい方は、本章を読み飛ばしてください
-:::
-
 ### 設定が面倒くさい
 
 かなりの割合を占めると思われます。「別に設定しなくても困らない」という状況。
 設定さえしてしまえば今後の開発にずっと効いてくるので、一度やってみましょう！
+
+:::message
+フロントエンドのチームでは `.eslintrc.json` や `.prettierrc` などがプロジェクトごと用意され、Linter / Formatter の利用が当たり前（必須）になっていると思われます。これはインフラチームにはあまりない特徴です。
+:::
 
 ### 貸与 PC がすぐ変わる
 
@@ -83,12 +87,71 @@ VCS を使っていない、の亜種です。コードを見る人がいない�
 こちらも一度もお客様や情報システム部と会話したことがなければ、まず相談しましょう。
 最終手段は異動もしくは転職になりますが…
 
-## 設定方法
+## 設定
+
+VSCode で Formatter を有効化する設定方法を記載します！
 
 ### 設定方針
 
+- デフォルトの Formatter を `Prettier` に
+- `Prettier` 非対応の言語は個別設定
+- Formatter は常に動作を ON に
+
+`Prettier` は多くの言語に対応した Formatter です。フロントエンドのファイルを中心に動作するため、インフラエンジニアが使用する言語には対応していない場合があります。
+今回は `Terraform` の利用を想定して追加設定します。その他言語も同様の手順で設定可能です。
+
 ### 拡張機能インストール
+
+左ペインの「拡張機能」から `Prettier` と `Terraform` を検索し、インストールしてください。
+
+:::message
+似たような拡張機能が複数表示される場合は、発行元やチェックマークを確認しましょう。
+:::
+
+![Prettier](/images/formatter-vscode-20231030/extension1.png)
+![Terraform](/images/formatter-vscode-20231030/extension2.png)
 
 ### 設定ファイル編集
 
-## 使用方法
+左上のメニューから「ファイル」＞「ユーザー設定」＞「設定」を開きます。
+左下の歯車アイコンから「設定」でも開けます。
+その後、右上の「設定(JSON)を開く」をクリックし、以下設定を記載します。
+
+:::message
+
+- 本設定は GUI でも設定可能です。
+- 既存の設定がある場合には、追記する形で記載します。
+- Formatter 名はタイプすると自動補完されます。
+
+:::
+
+```json:setting.json
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  }
+}
+```
+
+## 使用例
+
+### Terraform
+
+保存をするだけで、綺麗にフォーマットされています！
+
+:::message
+うまく行かない場合 `terraform` コマンドにパスが通っているか確認してください。
+:::
+
+![terraform-fmt](/images/formatter-vscode-20231030/terraform-fmt.gif)
+
+### JavaScript
+
+`ESLint` と `Prettier` を組み合わせると強力です。
+設定例は省略しますが、セミコロンの有無、クォーテーションの種類統一、末尾カンマ付与など様々な修正が自動で可能です！
+
+![js-fmt](/images/formatter-vscode-20231030/js-fmt.gif)
