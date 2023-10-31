@@ -150,7 +150,7 @@ VSCode で Formatter を有効化する設定方法を記載します！
 うまく行かない場合 `terraform` コマンドにパスが通っているか確認してください。
 :::
 
-![terraform-fmt](/images/formatter-vscode-20231030/terraform-fmt.gif)
+![terraform-fmt](/images/formatter-vscode-20231030/tf-fmt.gif)
 
 ### JavaScript
 
