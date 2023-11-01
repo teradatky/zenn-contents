@@ -3,7 +3,7 @@ title: "インフラエンジニアに捧ぐ！フォーマッターのススメ
 emoji: "⌨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["VSCode", "Linter", "Formatter", "Editor",]
-published: false
+published: true
 ---
 
 Linter / Formatter に初めて触れたインフラエンジニアが自身の周りの考察も含め、VSCode の設定をご紹介します！
