@@ -77,7 +77,7 @@ Terraform のバックエンド用 S3 バケットを作成します。
 
 サンプルコードはこちら。
 
-https://github.com/teradatky/ci-codebuild-terraform-20231026
+https://github.com/teradatky/ci-codebuild-terraform-sample
 
 ### GitHub
 
@@ -230,7 +230,7 @@ resource "aws_s3_bucket" "my_bucket" {
 プルリクエストを作成し、マージするまでの流れを記載します。
 実際のプルリクエストはこちらから確認できます。
 
-https://github.com/teradatky/ci-codebuild-terraform-20231026/pull/2
+https://github.com/teradatky/ci-codebuild-terraform-sample/pull/2
 
 プルリクエストを作成しました。
 
