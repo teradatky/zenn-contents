@@ -3,7 +3,7 @@ title: "AWS のリセール（請求代行サービス）って何？"
 emoji: "🛒"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS"]
-published: false
+published: true
 ---
 
 意外と知られていない AWS の調達についてです。
