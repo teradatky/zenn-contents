@@ -1,5 +1,5 @@
 ---
-title: "AWS Network Firewall でドメインによるホワイトリスト通信制御"
+title: "AWS Network Firewall でドメインホワイトリスト形式によるアウトバウンド通信制御"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "NetworkFirewall", "Security", "Proxy"]
@@ -56,3 +56,7 @@ curl https://www.google.com --resolv www.google.com:443:183.79.250.251 -H "Host:
 :::message
 単に AWS リソースの稼働コストだけであれば、ALB + EC2 (Squid) の方が安いです。検討時には EC2 や Squid の運用コストを考慮しましょう。
 :::
+
+## まとめ
+
+注意点のように気をつけるべきポイントはありますが、ドメインによるホワイトリスト通信制御として利用可能です。選択肢の一つとして持っておくとよいでしょう。
