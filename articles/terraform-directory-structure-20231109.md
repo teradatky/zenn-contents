@@ -2,7 +2,7 @@
 title: "Terraform のディレクトリ構成に関する戦略と所感"
 emoji: "📂"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["Terraform"]
+topics: ["Terraform", "AWS"]
 published: false
 ---
 
@@ -17,14 +17,52 @@ takuya@DESKTOP:~/terraform$ tree .
     ├── dev
     │   ├── application.tf
     │   ├── database.tf
+    │   ├── loadbalancer.tf
     │   ├── locals.tf
     │   └── provider.tf
     ├── prd
     │   ├── application.tf
     │   ├── database.tf
+    │   ├── loadbalancer.tf
     │   ├── locals.tf
     │   └── provider.tf
     └── stg
+```
+
+```hcl:env/prd/application.tf
+resource "aws_instance" "main" {
+  instance_type = local.instance_type
+  tags = {
+    Name = join("-", [local.env, local.name, "ec2"])
+  }
+  ...
+}
+```
+
+```hcl:env/dev/application.tf
+resource "aws_instance" "main" {
+  instance_type = local.instance_type
+  tags = {
+    Name = join("-", [local.env, local.name, "ec2"])
+  }
+  ...
+}
+```
+
+```hcl:env/prd/locals.tf
+locals {
+  instance_type = "m5.large"
+  Name          = "commerce"
+  ...
+}
+```
+
+```hcl:env/dev/locals.tf
+locals {
+  instance_type = "t3.small"
+  Name          = "commerce"
+  ...
+}
 ```
 
 #### メリット
@@ -56,8 +94,39 @@ takuya@DESKTOP:~/terraform$ tree .
     └── web_service
         ├── application.tf
         ├── database.tf
+        ├── loadbalancer.tf
         ├── outputs.tf
         └── variables.tf
+```
+
+```hcl:modules/web_service/application.tf
+resource "aws_instance" "main" {
+  instance_type = var.instance_type
+  tags = {
+    Name = join("-", [var.env, var.name, "ec2"])
+  }
+  ...
+}
+```
+
+```hcl:env/prd/main.tf
+module "commerce" {
+  source        = "../../modules/web_service"
+  env           = "prd"
+  name          = "commerce"
+  instance_type = "m5.large"
+  ...
+}
+```
+
+```hcl:env/dev/main.tf
+module "commerce" {
+  source        = "../../modules/web_service"
+  env           = "dev"
+  name          = "commerce"
+  instance_type = "t3.small"
+  ...
+}
 ```
 
 #### メリット
