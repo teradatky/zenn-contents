@@ -3,7 +3,7 @@ title: "Terraform のディレクトリ構成戦略"
 emoji: "📂"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Terraform", "AWS"]
-published: false
+published: true
 ---
 
 ## Terraform のディレクトリ構成と戦略
