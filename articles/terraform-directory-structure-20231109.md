@@ -184,6 +184,11 @@ locals {
 }
 ```
 
+:::message
+Terraform Cloud における Workspace は別の意味を持つ語なので注意してください。
+@[card](https://developer.hashicorp.com/terraform/cloud-docs/workspaces#terraform-cloud-vs-terraform-cli-workspaces)
+:::
+
 #### メリット
 
 - 設定変更時の環境変更漏れが起こりにくい
@@ -193,6 +198,31 @@ locals {
 
 - 環境差分を受け入れようとすると複雑になる（`count` 地獄）
 - Workspace ごとの変数使い分けや、操作対象の意識が必要
+
+:::details count 地獄の例
+
+```hcl
+...
+# 開発環境の CI サーバーは XX サーバーと同居するので不要
+resource "aws_instance" "ci_server" {
+  count = terraform.workspace == "dev1" || "dev2" || "dev3" ? 0 : 1
+  ...
+}
+
+# ステージング C 面のみ Z 社と接続（負荷試験用）
+resource "aws_vpc_peering_connection" "z_corp" {
+  count = terraform.workspace == "stg3" ? 1 : 0
+  ...
+}
+
+# ステージング C 面のみ Z 社と接続（負荷試験用）
+resource "aws_route" "z_corp" {
+  count = terraform.workspace == "stg3" ? 1 : 0
+}
+...
+```
+
+:::
 
 #### コメント
 
