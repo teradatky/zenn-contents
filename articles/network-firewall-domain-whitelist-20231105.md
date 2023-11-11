@@ -10,13 +10,13 @@ published: false
 
 AWS Network Firewall は、インバウンド・アウトバウンドの通信を制御できるクラウド型ファイアウォールです。AWS のフルマネージドサービスであるため、サーバーや仮想アプライアンスの管理が不要になります。
 
-AWS Network Firewall の展開モデルとして、分散型・集約型・複合型の 3 パターンが考えられます。それぞれの導入モデルについては以下ページを参考にしてください。
+AWS Network Firewall の展開モデルとして、分散型・集約型・複合型の 3 パターンが考えられます。それぞれのモデルについては以下ページを参考にしてください。
 
 https://aws.amazon.com/jp/blogs/news/networking-and-content-delivery-deployment-models-for-aws-network-firewall/
 
 ## ユースケース
 
-ここではホワイトリスト形式のドメインで通信を制御することを考えます。この要件を達成するために自前のプロキシ (Squid) サーバーを運用している組織は多いのではないでしょうか。このユースケースで必要な要素は以下のとおりです。
+ホワイトリスト形式のドメインで通信を制御することを考えます。この要件を達成するために自前のプロキシ (Squid) サーバーを運用している組織は多いのではないでしょうか。このユースケースで必要な要素は以下のとおりです。
 
 ![architecture1](/images/network-firewall-domain-whitelist-20231105/architecture1.png)
 
@@ -38,7 +38,7 @@ https://docs.aws.amazon.com/ja_jp/network-firewall/latest/developerguide/firewal
 
 ### 構成図
 
-今回は以下の構成を作成していきます。Google への通信のみを許可し、それ以外の通信をドロップします。 セッションマネージャー接続用のドメインも許可しています。
+以下の構成を作成します。Google への通信のみを許可し、それ以外の通信をドロップします。 セッションマネージャー接続用のドメインも許可しています。
 
 ![architecture2](/images/network-firewall-domain-whitelist-20231105/architecture2.png)
 
