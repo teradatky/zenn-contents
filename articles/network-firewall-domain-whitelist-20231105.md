@@ -1,5 +1,5 @@
 ---
-title: "AWS Network Firewall でドメインのホワイトリスト形式による通信制御"
+title: "AWS Network Firewall でドメインによるホワイトリスト通信制御"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "NetworkFirewall", "Security", "Proxy"]
@@ -44,7 +44,7 @@ https://docs.aws.amazon.com/ja_jp/network-firewall/latest/developerguide/firewal
 
 ### 構築
 
-以下 Terraform コードを利用・参考にしてください。マネジメントコンソールから作成する場合は画面の指示に従えば難なく作成できると思います。
+以下 Terraform コードを利用してください。コードのリソースとパラメーターを参考にして、マネジメントコンソールから作成しても構いません。
 
 :::message
 AWS Network Firewall のプロビジョニングには 10 分前後の時間がかかります。
@@ -154,6 +154,12 @@ vpc_endpoint_id = [for ss in tolist(aws_networkfirewall_firewall.main.firewall_s
 
 ### 動作確認
 
+作成された EC2 へセッションマネージャー経由でアクセスしてください。
+
+:::message
+デプロイ完了からアクセス可能になるまで 5 分前後の時間がかかる場合があります。
+:::
+
 許可ドメインに含まれる Google へアクセスします。TLS ハンドシェイクに成功しています。
 
 ```bash
@@ -169,6 +175,8 @@ curl -s -v -sslv3 -m 5 https://yahoo.co.jp 1> /dev/null
 ```
 
 ![curl_ng](/images/network-firewall-domain-whitelist-20231105/curl_ng.png =600x)
+
+以上からドメインによる通信制御ができることが確認できました！
 
 :::message
 通過した通信はフローログ、ドロップした通信はアラートログに記録可能です。
