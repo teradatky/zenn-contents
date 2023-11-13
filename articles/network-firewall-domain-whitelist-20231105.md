@@ -3,7 +3,7 @@ title: "AWS Network Firewall でドメインによるホワイトリスト通信
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "NetworkFirewall", "Security", "Proxy"]
-published: false
+published: true
 ---
 
 ## AWS Network Firewall とは
