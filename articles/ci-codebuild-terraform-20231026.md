@@ -114,8 +114,9 @@ phases:
       - terraform -chdir="${TFDIR}" init -no-color
   build:
     commands:
-      - PLAN=$(terraform -chdir="${TFDIR}" plan -no-color 2>&1)
-      - echo "${PLAN}" | tfnotify --config "${TFNCONF}" plan --title "${TITLE}" --message "${MSG}"
+      - |
+        PLAN=$(terraform -chdir="${TFDIR}" plan -no-color 2>&1)
+        echo "${PLAN}" | tfnotify --config "${TFNCONF}" plan --title "${TITLE}" --message "${MSG}"
 ```
 
 :::message
