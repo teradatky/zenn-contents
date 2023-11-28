@@ -1,5 +1,5 @@
 ---
-title: "Zenn を始めて 1 ヶ月経ったので社内サイトと PV 数を赤裸々に比べてみる"
+title: "Zenn を始めて 1 ヶ月経ったので社内サイトの PV 数と赤裸々に比べてみる"
 emoji: "🌐"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["Zenn", "ノウハウ", "ナレッジ", "キャリア"]
@@ -8,9 +8,9 @@ published: false
 
 ## まえがき
 
-### 記事の概要
+### 概要
 
-技術ノウハウ共有を社内サイトで行っているのですが、Zenn と比べてどうなのか書きます。
+Zenn での記事執筆について、社内サイトでの技術ノウハウ共有の PV 数と比較します。
 
 ### 社内サイトについて
 
@@ -40,23 +40,34 @@ Zenn の PV は 後述の Google Analytics から集計しています。特に�
 Web ページである、ということ。Google でさっと検索して記事に辿り着ける手軽さ。PDF や PowerPoint が置いてあるだけというシステムはそれだけで利用者から敬遠されます。また Zenn は表示がシンプルで速いため、閲覧者の気分を阻害しません。
 
 ![Speed Insight](/images/knowledge-share-comparison-20231128/speed_insight.png)
+*Zenn のレスポンスは非常に快適*
 
 ### Google Analytics 対応
 
 Google Analytics に対応しており、簡単にアクセス分析等が行えます。Google 側でトラッキング ID を払い出して Zenn に設定するだけです。社内サイトでは分からなかった情報が得られ楽しいです。
 
 ![Google Analytics](/images/knowledge-share-comparison-20231128/google_analytics.png)
+*Google Analytics で流入元を表示した画面*
 
 ### GitHub 連携
 
 GitHub 連携のおかげで、いつでもどこでもアウトプットをデータとして残しながら執筆ができます。PowerPoint や Excel で資料を作ることが減ったのもグッド。構成図は draw.io で。
 
 ![GitHub](/images/knowledge-share-comparison-20231128/github_conn.png)
+*VSCode で執筆し、プッシュで入稿*
 
 ## 最後に
 
-貴方の会社は、貴方のノウハウを貴方のモノとして公開できますか？クラスメソッド社の DevelopersIO は非常に良い例です。転職してもアウトプットを自身のモノとして持ち続けることができます。
+### アウトプットのすすめ
+
+貴方の会社は、貴方のノウハウを貴方のモノとして公開できますか？クラスメソッド社の DevelopersIO は非常に良い例です。対外的に活動が示せ、転職してもアウトプットを自分で管理できます。
 
 https://dev.classmethod.jp/
 
-アウトプットが社内に留まっている、転職時に自身のモノとして扱えない、となるくらいなら Zenn でアウトプットすることをおすすめします。多くの反応を貰い、自身のキャリアアップにも役立てることができると思います！
+アウトプットが社内に留まっている、転職時に自分のモノとして扱えない、となるくらいなら Zenn でアウトプットすることをおすすめします。多くの反応を貰い、自身のキャリアアップにも役立てることができると思います！
+
+### 宣伝
+
+私の記事一覧はこちら。
+
+https://zenn.dev/teradatky
