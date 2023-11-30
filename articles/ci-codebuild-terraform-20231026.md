@@ -6,19 +6,19 @@ topics: ["CICD", "AWS", "CodeBuild", "Terraform", "GitHub"]
 published: true
 ---
 
-AWS CodeBuild と GitHub による Terraform の CICD 実装例を紹介します。
-
 ## 想定読者
 
-- Terraform の CICD ワークフローを実装したい
-- AWS CodeBuild の具体的な使用例をみたい
+AWS CodeBuild と GitHub による Terraform の CICD 実装例を紹介します。
+
+- Terraform の CICD ワークフローを実装したい人
+- AWS CodeBuild の具体的な使用例をみたい人
 
 ## 構成図
 
-CodeBuild のビルドプロジェクトは 2 つ作成します。
-それぞれプルリクエスト作成/更新とマージに対応します。
-
 ![構成図](/images/ci-codebuild-terraform-20231026/architecture.png)
+
+CodeBuild のビルドプロジェクトを 2 つ作成します。
+それぞれプルリクエスト作成/更新とマージに対応します。
 
 :::message alert
 `terraform apply` が同時に実行される可能性がある場合は tfstate の破損を防ぐために　DynamoDB による state lock を追加してください。
@@ -30,7 +30,7 @@ GitHub Actions を利用すると CICD に関連するリソースが GitHub に
 
 ### tfnotify
 
-CICD ワークフローに Terraform の plan/apply 結果を通知してくれるツールです。
+Terraform の plan/apply 結果を GitHub や Slack に通知してくれるツールです。
 
 https://github.com/mercari/tfnotify
 
@@ -81,11 +81,10 @@ https://github.com/teradatky/ci-codebuild-terraform-sample
 
 ### GitHub
 
-リポジトリを参考に、CICD 用のコードをプッシュします。
-Terraform コードは `main.tf` を除いてください。
+サンプルコードを参考に、CICD 用のコードをプッシュします。
+Terraform コードの `main.tf` は後続の CICD ワークフロー体験で使うため、プッシュしないでください。
 
-CodeBuild が利用する `buildspec_plan.yml` は以下です。
-各フェーズでツールのインストール、 `terraform init` 、 `terraform plan | tfnotify` をしています。
+CodeBuild が plan 時に利用する `buildspec_plan.yml` は以下です。
 apply を行う `buildspec_apply.yml` については、リポジトリを確認してください。
 
 ```yml:buildspec_plan.yml
@@ -124,7 +123,7 @@ CICD が頻繁に実行される場合は `terraform` `tfnotify` のインスト
 :::
 
 tfnotify 用の設定ファイルは以下です。
-こちらは plan と apply が 1 ファイルにまとめられます。
+こちらは plan と apply を 1 ファイルにまとめられます。
 
 ```yml:tfnotify.yml
 ---
@@ -236,6 +235,8 @@ https://github.com/teradatky/ci-codebuild-terraform-sample/pull/2
 プルリクエストを作成しました。
 
 ![PullRequest](/images/ci-codebuild-terraform-20231026/pr1.png)
+
+![PullRequest](/images/ci-codebuild-terraform-20231026/pr1_file.png)
 
 すると `tfnotify` により plan 結果が通知されます。
 レビュアーはこの結果を確認することで、マージ可否を簡単に判断できるようになります。
