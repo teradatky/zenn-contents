@@ -56,7 +56,7 @@ https://www.infracost.io/pricing/
 
 ![](/images/infracost-terraform-20231208/dashboard.png)
 
-以下リポジトリ個別を調査してみます。もちろんコスト試算はしてくれるのですが、なにやら FinOps policies と Tagging policies に違反するリソースがあることが分かりました。
+以下リポジトリを調査してみます。もちろんコスト試算はしてくれるのですが、なにやら FinOps policies と Tagging policies に違反するリソースがあることが分かりました。
 
 https://github.com/teradatky/aws-network-firewall-sample
 
@@ -65,7 +65,7 @@ https://github.com/teradatky/aws-network-firewall-sample
 ![](/images/infracost-terraform-20231208/tagging_policy.png)
 ![](/images/infracost-terraform-20231208/project.png)
 
-Infracost が用意するポリシーが気になるので、調べてみましょう。画面上部の Governance から FinOps policiesをクリックします。指摘済みのCloudWatch Logs のログ保持期間以外にも様々なポリシーがあることが分かります。個別にポリシーの ON/OFF もできるようです。
+Infracost が用意するポリシーが気になるので、調べてみましょう。画面上部の Governance から FinOps policies をクリックします。指摘済みの CloudWatch Logs のログ保持期間以外にも様々なポリシーがあることが分かります。個別にポリシーの ON/OFF もできるようです。
 
 ![](/images/infracost-terraform-20231208/finops_policies1.png)
 ![](/images/infracost-terraform-20231208/finops_policies2.png)
@@ -73,13 +73,13 @@ Infracost が用意するポリシーが気になるので、調べてみまし�
 ![](/images/infracost-terraform-20231208/finops_policies4.png)
 ![](/images/infracost-terraform-20231208/finops_policies5.png)
 
-Tagging policies も確認します。デフォルト設定は以下の通りです。タグ付けを強制はクラウドサービス側で行うのが定石かと思いますが、Infracost 側で行うこともできそうです。
+Tagging policies も確認します。デフォルト設定は以下の通りです。タグ付けの強制はクラウドサービス側で行うのが定石かと思いますが、Infracost 側から行うこともできそうです。
 
 ![](/images/infracost-terraform-20231208/tagging_policies1.png)
 ![](/images/infracost-terraform-20231208/tagging_policies2.png)
 
 ## まとめ
 
-Infracost を利用すると、IaC化さえしていればコスト試算が簡単に行えることが分かりました。一方 VSCode の拡張機能はワークスペース利用時に正常動作しなかったり、一部計算の表示がおかしかったりすることが分かりました。改善に期待です。
+Infracost を利用すると、IaC 化さえしていればコスト試算が簡単に行えます。一方で VSCode の拡張機能はワークスペース利用時に正常動作しなかったり、一部計算の表示がおかしかったりすることが分かりました。改善に期待です。
 
 Infracost Cloud はコスト試算に加え、コスト最適化のベストプラクティスを指摘してくれるのため、一度目を通す価値はあると思います。ただしあくまでコスト影響のあるパラメータに対する指摘であり、ワークロードに対する最適なアーキテクチャを教えてくれるわけではありません。これは業務の中で身につけていきたいです。
