@@ -38,7 +38,7 @@ Terraform コードを含むフォルダを VSCode で開くと自動でコス�
 
 
 :::message
-VSCode のワークスペース機能で複数の Terraform リポジトリを開いていると、拡張機能が正しく認識してくれません。これはかなり残念ポイントです。
+VSCode のワークスペース機能で複数のフォルダを開いていると、拡張機能が正しく動作しません。これはかなり残念ポイントです。
 
 @[card](https://github.com/infracost/vscode-infracost/issues/1)
 
@@ -52,7 +52,7 @@ Infracost Cloud ではより詳しく確認できます。サインアップし�
 
 https://www.infracost.io/pricing/
 
-ダッシュボードでは連携済み 5 項目のコスト最適化された設定の達成率を表示してくれます。
+ダッシュボードでは 5 項目について、コスト最適化設定の達成率を表示してくれます。
 
 ![](/images/infracost-terraform-20231208/dashboard.png)
 
