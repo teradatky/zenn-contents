@@ -3,7 +3,7 @@ title: "Infracost で Terraform コードからコストを試算してみる"
 emoji: "💵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "Terraform", "infracost"]
-published: false
+published: true
 ---
 
 ## Infracost
