@@ -15,7 +15,7 @@ https://github.com/infracost/infracost
 
 ## 導入
 
-VSCode および公式サイトでの利用法を記載します。
+VSCode および Infracost Cloud での利用法を記載します。
 
 :::message
 CLI 利用や CI/CD ワークフローへの導入も可能です。公式サイトを確認ください。
