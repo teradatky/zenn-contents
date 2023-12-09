@@ -37,7 +37,7 @@ https://docs.github.com/ja/repositories/creating-and-managing-repositories/renam
 
 https://github.com/teradatky/ci-codebuild-terraform-sample/pull/3
 
-ある日プルリクエストを作成したところ、AWS Codebuild を利用して `terrafom` コマンドの結果を GitHub へコメントする CI が動かなくなっていました。GitHub の `Settings` > `Webhooks` > `Edit` > `Recent Deliveries` を確認すると、HTTP 400 で以下エラーが出力されていました。
+ある日プルリクエストを作成したところ、AWS Codebuild を利用して `terraform` コマンドの結果を GitHub へコメントする CI が動かなくなっていました。GitHub の `Settings` > `Webhooks` > `Edit` > `Recent Deliveries` を確認すると、HTTP 400 で以下エラーが出力されていました。
 
 ```text
 Invalid Webhook request received: Invalid source repository specified
