@@ -3,7 +3,7 @@ title: "AWS Systems Manager ドキュメント (SSM ドキュメント) で EC2 
 emoji: "⚙️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "SystemsManager", "EC2", "Ansible"]
-published: false
+published: true
 ---
 
 ## まえがき
