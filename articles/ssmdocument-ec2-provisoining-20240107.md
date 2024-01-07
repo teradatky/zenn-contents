@@ -50,7 +50,7 @@ https://github.com/teradatky/ssm_document_sample/blob/main/terraform/modules/ssm
 ![connect ec2](/images/ssmdocument-ec2-provisioning-20240107/connect_ec2.png)
 ![hostname before](/images/ssmdocument-ec2-provisioning-20240107/hostname_before.png)
 
-では SSM ドキュメントを実行してみましょう。マネジメントコンソールから作成したドキュメントを選択します。
+では SSM ドキュメントを実行してみましょう。マネジメントコンソールから作成したドキュメントを選択し「コマンドを実行する」をクリックします。
 
 ![exec ssmdoc](/images/ssmdocument-ec2-provisioning-20240107/exec_ssmdoc1.png)
 ![exec ssmdoc](/images/ssmdocument-ec2-provisioning-20240107/exec_ssmdoc2.png)
@@ -63,7 +63,7 @@ https://github.com/teradatky/ssm_document_sample/blob/main/terraform/modules/ssm
 
 ![exec ssmdoc](/images/ssmdocument-ec2-provisioning-20240107/exec_ssmdoc4.png)
 
-残りはそのままで実行をクリックします。
+残りはそのままで「実行」をクリックします。
 
 ![exec ssmdoc](/images/ssmdocument-ec2-provisioning-20240107/exec_ssmdoc5.png)
 
