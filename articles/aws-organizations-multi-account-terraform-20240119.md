@@ -1,5 +1,5 @@
 ---
-title: "AWS Organizations で複数アカウントを作る with Terraform"
+title: "AWS Organizations でマルチアカウント with Terraform"
 emoji: "🏢"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "Terraform"]
@@ -150,7 +150,7 @@ resource "aws_organizations_account" "dev-account" {
 
 ## 実行
 
-management account から terraform を実行します。すると画像のように複数の AWS アカウントが作成できていることがわかります。
+Management Account から terraform を実行します。すると画像のように複数の AWS アカウントが作成できていることがわかります。
 
 :::message
 筆者は OIDC を介して管理アカウントへ Terraform Cloud からデプロイしています。
