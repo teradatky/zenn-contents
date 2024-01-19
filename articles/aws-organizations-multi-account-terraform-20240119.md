@@ -3,7 +3,7 @@ title: "AWS Organizations で複数アカウントを作る with Terraform"
 emoji: "🏢"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "Terraform"]
-published: false
+published: true
 ---
 
 ## 概要
