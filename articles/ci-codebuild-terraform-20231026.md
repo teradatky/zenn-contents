@@ -1,5 +1,5 @@
 ---
-title: "AWS CodeBuild と GitHub で実現する Terraform CICD 入門"
+title: "AWS CodeBuild と GitHub で実現する Terraform CI/CD 入門"
 emoji: "🛠️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["CICD", "AWS", "CodeBuild", "Terraform", "GitHub"]
@@ -8,9 +8,9 @@ published: true
 
 ## 想定読者
 
-AWS CodeBuild と GitHub による Terraform の CICD 実装例を紹介します。
+AWS CodeBuild と GitHub による Terraform の CI/CD 実装例を紹介します。
 
-- Terraform の CICD ワークフローを実装したい人
+- Terraform の CI/CD ワークフローを実装したい人
 - AWS CodeBuild の具体的な使用例をみたい人
 
 ## 構成図
@@ -25,7 +25,7 @@ CodeBuild のビルドプロジェクトを 2 つ作成します。
 :::
 
 :::details GitHub Actionsについて
-GitHub Actions を利用すると CICD に関連するリソースが GitHub に閉じるため、よりシンプルに利用できます。筆者の参画する案件では GitHub Enterprise（いわゆるオンプレ版）が提供されていますが、GitHub Actions を利用するためにセルフホストランナーを用意する必要がありました。インフラを自前で用意することを嫌ったため、チームの AWS アカウントで CodeBuild を利用することとしました。基本的な概念は同じため、参考にしてください。
+GitHub Actions を利用すると CI/CD に関連するリソースが GitHub に閉じるため、よりシンプルに利用できます。筆者の参画する案件では GitHub Enterprise（いわゆるオンプレ版）が提供されていますが、GitHub Actions を利用するためにセルフホストランナーを用意する必要がありました。インフラを自前で用意することを嫌ったため、チームの AWS アカウントで CodeBuild を利用することとしました。基本的な概念は同じため、参考にしてください。
 :::
 
 ### tfnotify
@@ -81,8 +81,8 @@ https://github.com/teradatky/ci-codebuild-terraform-sample
 
 ### GitHub
 
-サンプルコードを参考に、CICD 用のコードをプッシュします。
-Terraform コードの `main.tf` は後続の CICD ワークフロー体験で使うため、プッシュしないでください。
+サンプルコードを参考に、CI/CD 用のコードをプッシュします。
+Terraform コードの `main.tf` は後続の CI/CD ワークフロー体験で使うため、プッシュしないでください。
 
 CodeBuild が plan 時に利用する `buildspec_plan.yml` は以下です。
 apply を行う `buildspec_apply.yml` については、リポジトリを確認してください。
@@ -119,7 +119,7 @@ phases:
 ```
 
 :::message
-CICD が頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
+CI/CD が頻繁に実行される場合は `terraform` `tfnotify` のインストールを毎回行わずに済むよう、カスタムイメージを利用しましょう。`docker build` を行い ECR にプッシュすることで CodeBuild から利用可能です。
 :::
 
 tfnotify 用の設定ファイルは以下です。
@@ -216,9 +216,9 @@ OAuth 連携が初回の場合、このような画面に遷移します。
 
 ![CodeBuild](/images/ci-codebuild-terraform-20231026/codebuild9.png)
 
-## CICD ワークフロー
+## CI/CD ワークフロー
 
-実際に Terraform コードを記載し CICD ワークフローを回します。
+実際に Terraform コードを記載し CI/CD ワークフローを回します。
 今回は S3 バケットを作成します。 `main.tf` に以下を記載してプッシュします。
 
 ```hcl:main.tf
@@ -259,11 +259,11 @@ https://github.com/teradatky/ci-codebuild-terraform-sample/pull/2
 plan が通っても apply が失敗するケースはよくあるため、きちんと結果を確認しましょう。
 :::
 
-以上、CICD ワークフローの一例でした。
+以上、CI/CD ワークフローの一例でした。
 
 ## まとめ
 
-CodeBuild を使うことで、Terraform の CICD が実現できました。
+CodeBuild を使うことで、Terraform の CI/CD が実現できました。
 プルリクエストをベースとすることで、作業ミスや認識齟齬をグッと減らすことができます。
 また tfnotify は plan や apply 結果が プルリクエスト内で確認できるため、レビュー負荷が軽減されます。
-CICD を未経験の方はぜひ試してみて欲しいです。
+CI/CD を未経験の方はぜひ試してみて欲しいです。
