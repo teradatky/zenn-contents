@@ -1,5 +1,5 @@
 ---
-title: "IAM Identity Center でマルチ AWS アカウントでもらくらくログイン！"
+title: "IAM Identity Center でマルチ AWS アカウントでも楽々ログイン！"
 emoji: "👟"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "IAM"]
@@ -28,8 +28,8 @@ AWS IAM Identity Center (旧 AWS Single Sign-On) は 複数の AWS アカウン�
 1. IAM Identity Center にグループを作成
 1. グループにユーザーを追加
 1. 許可セットを作成
-1. AWS アカウントにグループを割り当て
-1. インスタンス名・アクセスポータルのURLなど設定を編集（オプション）
+1. AWS アカウントにグループと許可セットを割り当て
+1. インスタンス名・アクセスポータルの URL など設定を編集（オプション）
 
 公式の手順はこちら。
 
@@ -47,7 +47,7 @@ https://docs.aws.amazon.com/ja_jp/singlesignon/latest/userguide/useraccess.html
 
 ### グループ
 
-グループ名を入力してください。その後グループに先で作ったユーザーを追加してください。
+グループ名を入力してください。その後グループに作ったユーザーを追加してください。
 
 ![](/images/iam-identity-center-multi-account-20240120/group1.png)
 ![](/images/iam-identity-center-multi-account-20240120/group2.png)
@@ -96,7 +96,7 @@ https://docs.aws.amazon.com/ja_jp/singlesignon/latest/userguide/useraccess.html
 
 ### 改善してほしいところ
 
-今どのアカウントで作業しているのか？が分かりにくいです。画面右上のアカウント表示は `許可セット名/ユーザー名` となるためです。ここをクリックするとアカウント ID が表示されるのですが、マルチアカウント環境で脳内台帳と突き合わせるのはツライです。
+今どのアカウントで作業しているのか？が分かりにくいです。画面右上のアカウント表示は `許可セット名/ユーザー名` となるためです。ここをクリックするとアカウント ID が表示されるのですが、マルチアカウント環境で 12 桁の数字とアカウント用途を脳内台帳で突き合わせるのはツライです。
 
 ![](/images/iam-identity-center-multi-account-20240120/check.png)
 
@@ -120,7 +120,7 @@ https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_roles_providers_saml.h
 
 ![](/images/iam-identity-center-multi-account-20240120/extra1.png)
 
-また SSO は AWS アカウント以外でも利用できます。Auth 2.0 か SAML 2.0 に対応していればどんなアプリケーションもポータルサイトからアクセスできるようになります。Salesforce のような一般的なビジネスアプリケーションであれば、設定済みのカタログから選択することができます。AWS アカウントだけにとどまらず、様々なサービスに SSO できるよう試してみてはいかがでしょうか？
+また SSO は AWS アカウント以外でも利用できます。OAuth 2.0 か SAML 2.0 に対応していればどんなアプリケーションもポータルサイトからアクセスできるようになります。Salesforce のような一般的なビジネスアプリケーションであれば、設定済みのカタログから選択することができます。AWS アカウントだけにとどまらず、様々なサービスに SSO できるよう試してみてはいかがでしょうか？
 
 ![](/images/iam-identity-center-multi-account-20240120/extra2.png)
 ![](/images/iam-identity-center-multi-account-20240120/extra3.png)
