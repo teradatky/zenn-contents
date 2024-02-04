@@ -8,7 +8,7 @@ published: true
 
 ## 概要
 
-Twitter で EventBriidge のルールのフィルタリングがパワーアップしたとの情報をキャッチし、実際に調べてみました！
+Twitter で EventBridge のルールのフィルタリングがパワーアップしたとの情報をキャッチし、実際に調べてみました！
 
 https://twitter.com/nickste/status/1753513030984536380
 
