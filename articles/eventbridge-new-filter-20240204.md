@@ -3,7 +3,7 @@ title: "EventBridge のフィルターにプレフィックス・サフィック
 emoji: "🌉"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "EventBridge"]
-published: false
+published: true
 ---
 
 ## 概要
