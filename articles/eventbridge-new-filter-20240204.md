@@ -22,7 +22,7 @@ https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns-conte
 
 ## 実際に確認
 
-EventBridge で実際にイベントパターンを作って確認します。今回はサンプルイベントに `EC2 Instance Launch Unsccessful` イベントを選び、ASG 名を `anything-but` 条件でフィルタリングしてみます。
+EventBridge で実際にイベントパターンを作って確認します。今回はサンプルイベントに `EC2 Instance Launch Unsccessful` イベントを選び、ASG 名を `anything-but` および `prefix` 条件でフィルタリングしてみます。
 
 シチュエーションとしては基本的にはイベントを発火したいが、障害を模したリソース（プレフィックスが broken）では発火させないというケースを想定しています。
 
@@ -44,7 +44,7 @@ EventBridge で実際にイベントパターンを作って確認します。�
 }
 ```
 
-ASG 名のプレフィックスが broken のイベントのみ一致しないため、新しいフィルター条件 `anything-but` が正しく機能していることが確認できました！
+ASG 名のプレフィックスが broken のイベントのみ一致しないため、新しいフィルター条件 `anything-but`, `prefix` が正しく機能していることが確認できました！
 
 ## まとめ
 
