@@ -8,11 +8,11 @@ published: false
 
 ## 概要
 
-閏年の閏日に CloudWatch Logs エージェント `awslogs` （統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではない）によるログ転送が大量のエラーを吐いてしまった件について記載。
+閏年（うるうどし）の閏日（うるうび）に CloudWatch Logs エージェント `awslogs` （統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではない）によるログ転送が大量のエラーを吐いてしまった件について記載。
 
 ## 事象
 
-2024/02/29 になった瞬間より、以下のような大量のログエラーを検出。
+2024/02/29 になった瞬間から、以下のような大量のログエラーを検出。
 
 ```text
 2024-02-29 03:30:03,694 - cwlogs.push.reader - WARNING - 2489 - Thread-575 - Fall back to previous event time:
@@ -33,11 +33,11 @@ reason: timestamp could not be parsed from message.
 - `/var/log/messages`, `/var/log/secure` などで年を含まない `datetime_format` を使用
 - `awslogs` では、年を含まない `datetime_format` に対する補完処理をしている
   - Python の `datetime.datetime.strptime` でログの日時をパース
-  - 年が含まれない場合、1900 年としてパースされる
+  - 年が含まれない場合、1900年としてパースされる
   - `datetime_format` に年が含まれていなければ、1900 を今日の年で置き換える
 - 閏年の閏日 (2/29) 以外では問題なく動作していた
 - 閏年の閏日 (2/29) のみ日時のパースに失敗する
-  - 1900 年は閏年ではなく 1900/2/29 は不正な日付のため
+  - 1900年は閏年ではなく 1900/2/29 は不正な日付のため
 
 ### datetime.strptime について
 
@@ -49,7 +49,7 @@ https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime
 
 ## 経過
 
-Warning が大量に発生しているだけで、ログの転送とタイムスタンプには影響はなかった（現在時刻にフォールバックされるため）。また閏日を過ぎるとログエラーは発生しなくなった。
+WARNING が大量に発生しているだけで、ログの転送とタイムスタンプには影響はなかった（現在時刻にフォールバックされるため）。また閏日を過ぎるとログエラーは発生しなくなった。
 
 ## ポストモーテム
 
