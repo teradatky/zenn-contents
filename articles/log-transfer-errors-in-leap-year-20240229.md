@@ -8,7 +8,7 @@ published: false
 
 ## 概要
 
-閏年の閏日に CloudWatch Logs エージェント `awslogs` によるログ転送が大量のエラーを吐いてしまった件について記載します。（統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではない）
+閏年の閏日に CloudWatch Logs エージェント `awslogs` によるログ転送が大量のエラーを吐いてしまった件について記載します（統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではありません）。
 
 ## 事象
 
@@ -49,7 +49,7 @@ https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime
 
 ## 経過
 
-WARNING が大量に発生しているだけで、ログの転送とタイムスタンプには影響はありませんでした。（現在時刻にフォールバックされるため）また閏日を過ぎるとログエラーは発生しなくなりました。
+WARNING が大量に発生しているだけで、ログの転送とタイムスタンプには影響はありませんでした（現在時刻にフォールバックされるため）。また閏日を過ぎるとログエラーは発生しなくなりました。
 
 ## ポストモーテム
 
