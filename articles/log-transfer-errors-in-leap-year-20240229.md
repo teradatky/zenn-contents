@@ -3,12 +3,12 @@ title: "閏年（うるうどし）の閏日（うるうび）にログ転送の
 emoji: "📅"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS", "CloudWatch", "閏年"]
-published: false
+published: true
 ---
 
 ## 概要
 
-閏年の閏日に CloudWatch Logs エージェント `awslogs` によるログ転送が大量のエラーを吐いてしまった件について記載します（統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではありません）。
+閏年の閏日に CloudWatch Logs エージェント `awslogs` によるログ転送において大量のエラーが発生した件について記載します（統合 CloudWatch エージェント `amazon-cloudwatch-agent` ではありません）。
 
 ## 事象
 
@@ -49,7 +49,7 @@ https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime
 
 ## 経過
 
-WARNING が大量に発生しているだけで、ログの転送とタイムスタンプには影響はありませんでした（現在時刻にフォールバックされるため）。また閏日を過ぎるとログエラーは発生しなくなりました。
+WARNING が大量に発生しているだけで、ログの転送には影響はありませんでした（現在時刻にフォールバックされるため）。また閏日を過ぎるとログエラーは発生しなくなるはずです（確認後に更新予定）。
 
 ## ポストモーテム
 
